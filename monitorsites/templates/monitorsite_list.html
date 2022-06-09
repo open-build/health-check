@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block page_title %}{{ WORKFLOWLEVEL1 }} Indicators{% endblock %}
+
+{% block content %}
+
+<div id="toplevel_div">
+<!-- Default panel contents -->
+{% if getMointorSite %}
+    {% for site in getMointorSite %}
+        <div class='panel panel-default'>
+            <div>
+              <a href="/monitorsite_update/{{ site.id }}" class="btn btn-xs btn-success">{{ site.name|truncatechars:85 }}</a>
+            </div>
+            <div>
+              <a href="/monitorsite_create/" class="btn btn-xs btn-success">New Site</a>
+            </div>
+        </div>
+
+    {% endfor %}
+{% else %}
+    <p>No Sites</p>
+    <a href="/monitorsite_create/" class="btn btn-xs btn-success">New Site</a>
+{% endif %}
+</div>
+
+
+{% endblock content %}

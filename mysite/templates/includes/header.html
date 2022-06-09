@@ -1,0 +1,36 @@
+{% load i18n wagtailcore_tags %}
+{% load static %}
+<header class="header" style="background: url('/static/img/5.png'); background-size: cover; height: 70rem; background-position: center center; background-repeat: no-repeat;">
+
+  <div id="cont" class="contenedor">
+
+
+
+
+      <div class="barra">
+          <a class="logo" href="/home/">
+              <h1 class="logo__nombre no-margin centrar-texto">Open<span class="logo__bold"> Build</span></h1>
+          </a>
+
+          <nav class="navegacion">
+              <a href="/home/" class="navegacion__enlace">{% trans "Home" %}</a>
+              <a href="/monitor_sites/" class="navegacion__enlace">{% trans "Site Monitoring" %}</a>
+              <a href="/report/" class="navegacion__enlace">{% trans "Reports" %}</a>
+          </nav>
+      </div>
+  </div>
+
+  <div class="header__texto">
+      <h1 class="no-margin">Monitor and Report on the status of your Web Site</h1>
+      <h2 class="no-margin">with <em>Open Build Health Check</em></h2>
+  </div>
+</header>
+
+<!--  -->
+  <div class="contenedor contenido-principal">
+      <main class="About_us">
+          <h3></h3>
+          <p></p>
+
+      </main>
+  </div>
