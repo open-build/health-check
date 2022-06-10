@@ -15,6 +15,12 @@ from .models import MonitorSite, Status
 
 from .forms import MonitorSiteForm
 
+def homepage(request):
+    """View function for home page of site."""
+
+    # Render the HTML template index.html with the data in the context variable
+    return render(request, 'home_page.html')
+
 class MonitorSiteList(ListView):
     """
     Monitored Sites
@@ -24,7 +30,7 @@ class MonitorSiteList(ListView):
 
     def get(self, request, *args, **kwargs):
 
-        getSites = MonitorSite.objects.all().filter(owner=self.request.user)
+        getSites = MonitorSite.objects.all()
 
         return render(request, self.template_name, {'getSites': getSites,})
 
@@ -67,7 +73,7 @@ class MonitorSiteCreate(CreateView):
     form_class = MonitorSiteForm
 
 
-class IndicatorUpdate(UpdateView):
+class MonitorSiteUpdate(UpdateView):
     """
     Update and Edit Montiored Site.
     """
@@ -106,7 +112,7 @@ class IndicatorUpdate(UpdateView):
         return render(self.get_context_data(form=form))
 
 
-class MontiorSiteDelete(DeleteView):
+class MonitorSiteDelete(DeleteView):
     """
     Delete a MontiorSite
     """
