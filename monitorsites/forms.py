@@ -5,6 +5,7 @@ from crispy_forms.bootstrap import *
 from crispy_forms.layout import Layout, Submit, Reset
 from functools import partial
 from django import forms
+from django.urls import reverse
 
 
 class MonitorSiteForm(forms.ModelForm):
@@ -16,11 +17,9 @@ class MonitorSiteForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        #get the user object to check permissions with
-        self.request = kwargs.pop('request')
         self.helper = FormHelper()
         self.helper.form_method = 'post'
-        self.helper.form_action = reverse_lazy('montiorsite_update', kwargs={'pk': monitorsite.id})
+        self.helper.form_action = reverse(kwargs.pop('action_name'))
         self.helper.form_id = 'monitorsite_update_form'
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-sm-2'
@@ -35,7 +34,7 @@ class MonitorSiteForm(forms.ModelForm):
             TabHolder(
                 Tab('Site to Monitor',
                      Fieldset('',
-                        'name','url','polling_interval','description',
+                        'name','url','polling_interval','description','status'
                         ),
                 ),
             ),
@@ -43,12 +42,8 @@ class MonitorSiteForm(forms.ModelForm):
             HTML("""<br/>"""),
             FormActions(
                 Submit('submit', 'Save', css_class='btn-default'),
-                Submit('_addanother', 'Save & Add Another >>', css_class='btn-default'),
                 Reset('reset', 'Reset', css_class='btn-warning')
             )
         )
 
         super(MonitorSiteForm, self).__init__(*args, **kwargs)
-
-        #override the country queryset to use request.user for country
-        self.fields['owner'] = self.request.user

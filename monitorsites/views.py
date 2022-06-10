@@ -10,6 +10,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic.detail import View
+from django.shortcuts import redirect
 
 from .models import MonitorSite, Status
 
@@ -20,6 +21,12 @@ def homepage(request):
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'home_page.html')
+
+def report(request):
+    """View function for report page of site."""
+
+    # Render the HTML template index.html with the data in the context variable
+    return render(request, 'report.html')
 
 class MonitorSiteList(ListView):
     """
@@ -39,8 +46,7 @@ class MonitorSiteCreate(CreateView):
     Montior for sites creation
     """
     model = MonitorSite
-    template_name = 'monitor_form.html'
-
+    template_name = 'monitorsite_form.html'
     #pre-populate parts of the form
     def get_initial(self):
         initial = {
@@ -49,26 +55,15 @@ class MonitorSiteCreate(CreateView):
 
         return initial
 
-    # send prepoluated data to the form
-    def get_context_data(self, **kwargs):
-        context = super(MontiorSiteCreate, self).get_context_data(**kwargs)
-        context.update({'id': self.kwargs['id']})
-        return context
-
-    def dispatch(self, request, *args, **kwargs):
-        return super(MontiorSiteCreate, self).dispatch(request, *args, **kwargs)
-
-    def form_invalid(self, form):
-
-        messages.error(self.request, 'Invalid Form', fail_silently=False)
-
-        return render(self.get_context_data(form=form))
+    def get_form_kwargs(self):
+        kwargs = super(MonitorSiteCreate, self).get_form_kwargs()
+        kwargs["action_name"] = "monitorsites_add"
+        return kwargs
 
     def form_valid(self, form):
         form.save()
         messages.success(self.request, 'Success, Monitored Site Created!')
-        form = ""
-        return render(self.get_context_data(form=form))
+        return redirect('/monitorsites/')
 
     form_class = MonitorSiteForm
 
@@ -77,49 +72,27 @@ class MonitorSiteUpdate(UpdateView):
     """
     Update and Edit Montiored Site.
     """
-
-    def get_template_names(self):
-        return 'monitor_form.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        return super(MontiorSiteUpdate, self).dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(MontiorSiteUpdate, self).get_context_data(**kwargs)
-        context.update({'id': self.kwargs['pk']})
-        getIndicator = MontiorSite.objects.get(id=self.kwargs['pk'])
-
-        return context
-
-    # add the request to the kwargs
-    def get_form_kwargs(self):
-        kwargs = super(MontiorSiteUpdate, self).get_form_kwargs()
-        kwargs['request'] = self.request
-        site = MontiorSite.objects.all().filter(id=self.kwargs['pk'])
-        kwargs['site'] = site
-        return kwargs
-
+    model = MonitorSite
+    template_name = 'monitorsite_form.html'
+    fields = ['name','url','polling_interval','description','status']
     def form_invalid(self, form):
         messages.error(self.request, 'Invalid Form', fail_silently=False)
         return render(self.get_context_data(form=form))
 
     def form_valid(self, form):
-        site = MontiorSite.objects.get(pk=self.kwargs.get('pk'))
+        site = MonitorSite.objects.get(pk=self.kwargs.get('pk'))
         self.object = form.save()
 
         messages.success(self.request, 'Success, Monitored Site Updated!')
 
-        return render(self.get_context_data(form=form))
+        return redirect('/monitorsites/')
 
 
 class MonitorSiteDelete(DeleteView):
     """
     Delete a MontiorSite
     """
-    success_url = '/monitor_site/'
-
-    def dispatch(self, request, *args, **kwargs):
-        return super(MontiorSiteDelete, self).dispatch(request, *args, **kwargs)
+    model = MonitorSite
 
     def form_invalid(self, form):
 
@@ -130,6 +103,5 @@ class MonitorSiteDelete(DeleteView):
     def form_valid(self, form):
 
         form.save()
-
         messages.success(self.request, 'Success, Montior Site Deleted!')
-        return render(self.get_context_data(form=form))
+        return redirect('/monitorsites/')

@@ -1,26 +1,23 @@
 {% extends "base.html" %}
-
-{% block page_title %}{{ WORKFLOWLEVEL1 }} Indicators{% endblock %}
+{% load static %}
+{% block page_title %}Site Monitoring{% endblock %}
 
 {% block content %}
 
-<div id="toplevel_div">
+<div class="contenedor">
 <!-- Default panel contents -->
-{% if getMointorSite %}
-    {% for site in getMointorSite %}
+{% if getSites %}
+    {% for site in getSites %}
         <div class='panel panel-default'>
             <div>
-              <a href="/monitorsite_update/{{ site.id }}" class="btn btn-xs btn-success">{{ site.name|truncatechars:85 }}</a>
-            </div>
-            <div>
-              <a href="/monitorsite_add/" class="btn btn-xs btn-success">New Site</a>
+              <a href="/monitorsites_update/{{ site.id }}" class="btn btn-xs btn-success">{{ site.name|truncatechars:85 }}</a>
             </div>
         </div>
 
     {% endfor %}
 {% else %}
     <p>No Sites</p>
-    <a href="/monitorsite_add/" class="btn btn-xs btn-success">New Site</a>
+    <a href="/monitorsites_add/" class="btn btn-xs btn-success">New Site</a>
 {% endif %}
 </div>
 

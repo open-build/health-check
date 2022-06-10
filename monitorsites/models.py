@@ -36,7 +36,7 @@ class MonitorSite(models.Model):
     description = models.TextField(blank=True)
     owner = models.ForeignKey('auth.User',blank=True, null=True, on_delete=models.CASCADE)
     url = models.CharField(max_length=255, blank=True)
-    status = models.ForeignKey(Status, default=1, on_delete=models.CASCADE)
+    status = models.ForeignKey(Status, null=True, blank=True, on_delete=models.CASCADE)
     polling_interval = models.IntegerField(default=0, blank=True, null=True)
     create_date = models.DateTimeField(null=True, blank=True)
     edit_date = models.DateTimeField(null=True, blank=True)

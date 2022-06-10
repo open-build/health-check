@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block page_title %}Site to Monitor{% endblock %}
 
 {% block content %}
-
+<div class="contenedor">
     {% if form.errors %}
         <div class="help-block">
         {% for field in form %}
@@ -24,5 +24,5 @@
         {% load crispy_forms_tags %}
         {% crispy form %}
     </div>
-
+</div>
 {% endblock content %}
