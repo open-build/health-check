@@ -10,6 +10,10 @@
 
 {% block content %}
 
-{% include 'about/about_page.html' %}
+<div class="contenedor">
+  <h4>Health Check </h4>
+  <p>{{ message }}</p>
+    <a href="/monitorsites/" class="btn btn-xs btn-success">Back to Sites</a>
+</div>
 
 {% endblock content %}

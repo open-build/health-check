@@ -2,7 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -12,9 +13,14 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import View
 from django.shortcuts import redirect
 
-from .models import MonitorSite, Status
+from .health_check import check_now as check_site
 
+from .models import MonitorSite
 from .forms import MonitorSiteForm
+
+class MyView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
 
 def homepage(request):
     """View function for home page of site."""
@@ -22,13 +28,21 @@ def homepage(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'home_page.html')
 
+@login_required(login_url='/')
 def report(request):
     """View function for report page of site."""
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'report.html')
 
-class MonitorSiteList(ListView):
+@login_required(login_url='/')
+def check_now(request,pk):
+    """Check the status of a site."""
+    message = check_site(pk)
+    # Render the HTML template index.html with the data in the context variable
+    return render(request, 'health_check.html',{'message': message,})
+
+class MonitorSiteList(ListView,LoginRequiredMixin):
     """
     Monitored Sites
     """
@@ -37,11 +51,11 @@ class MonitorSiteList(ListView):
 
     def get(self, request, *args, **kwargs):
 
-        getSites = MonitorSite.objects.all()
+        getSites = MonitorSite.objects.all().filter(owner=request.user)
 
         return render(request, self.template_name, {'getSites': getSites,})
 
-class MonitorSiteCreate(CreateView):
+class MonitorSiteCreate(CreateView,LoginRequiredMixin,):
     """
     Montior for sites creation
     """
@@ -58,9 +72,11 @@ class MonitorSiteCreate(CreateView):
     def get_form_kwargs(self):
         kwargs = super(MonitorSiteCreate, self).get_form_kwargs()
         kwargs["action_name"] = "monitorsites_add"
+        kwargs['request'] = self.request
         return kwargs
 
     def form_valid(self, form):
+        form.instance.owner = self.request.user
         form.save()
         messages.success(self.request, 'Success, Monitored Site Created!')
         return redirect('/monitorsites/')
@@ -68,13 +84,18 @@ class MonitorSiteCreate(CreateView):
     form_class = MonitorSiteForm
 
 
-class MonitorSiteUpdate(UpdateView):
+class MonitorSiteUpdate(UpdateView,LoginRequiredMixin,):
     """
     Update and Edit Montiored Site.
     """
     model = MonitorSite
     template_name = 'monitorsite_form.html'
     fields = ['name','url','polling_interval','description','status']
+    def get_form_kwargs(self):
+        kwargs = super(MonitorSiteCreate, self).get_form_kwargs()
+        kwargs["action_name"] = "monitorsites_update"
+        kwargs['request'] = self.request
+        return kwargs
     def form_invalid(self, form):
         messages.error(self.request, 'Invalid Form', fail_silently=False)
         return render(self.get_context_data(form=form))
@@ -88,7 +109,7 @@ class MonitorSiteUpdate(UpdateView):
         return redirect('/monitorsites/')
 
 
-class MonitorSiteDelete(DeleteView):
+class MonitorSiteDelete(DeleteView,LoginRequiredMixin,):
     """
     Delete a MontiorSite
     """

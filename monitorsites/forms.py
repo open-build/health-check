@@ -7,7 +7,7 @@ from functools import partial
 from django import forms
 from django.urls import reverse
 
-
+# Monitor Forms
 class MonitorSiteForm(forms.ModelForm):
 
     class Meta:
@@ -17,9 +17,14 @@ class MonitorSiteForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+
         self.helper = FormHelper()
         self.helper.form_method = 'post'
+        # get rid of extra keywords before calling super
         self.helper.form_action = reverse(kwargs.pop('action_name'))
+        self.request = kwargs.pop('request')
+        # call super to get form fields
+        super(MonitorSiteForm, self).__init__(*args, **kwargs)
         self.helper.form_id = 'monitorsite_update_form'
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-sm-2'
@@ -45,5 +50,5 @@ class MonitorSiteForm(forms.ModelForm):
                 Reset('reset', 'Reset', css_class='btn-warning')
             )
         )
-
+        self.fields['owner'].initial = self.request.user
         super(MonitorSiteForm, self).__init__(*args, **kwargs)

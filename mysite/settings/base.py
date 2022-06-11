@@ -25,7 +25,6 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
-    'monitorsites',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -34,8 +33,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_social_share',
+
+    'monitorsites',
+    
+    # forms
     'colorful',
     'crispy_forms',
+
+    # auth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.apple',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.gitlab',
 ]
 
 MIDDLEWARE = [
@@ -111,6 +125,29 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# AUTH
+
+AUTHENTICATION_BACKENDS = (
+ #used for default signin such as loggin into admin panel
+ 'django.contrib.auth.backends.ModelBackend',
+
+ #used for social authentications
+ 'allauth.account.auth_backends.AuthenticationBackend',
+ )
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+SOCIALACCOUNT_FORMS = {'signup': 'mysite.forms.MyCustomSocialSignupForm'}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -150,6 +187,8 @@ MEDIA_URL = '/media/'
 
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'https://health.open.build'
+
+LOGIN_REDIRECT_URL = '/'
 
 PUPUT_AS_PLUGIN = False
 

@@ -4,19 +4,25 @@ from django.contrib import admin
 
 from django.conf.urls import url
 from monitorsites.views import *
-
-from monitorsites.views import homepage,report
+from . import views
+from monitorsites.views import homepage,report,check_now
 
 urlpatterns = [
     path('django-admin/', admin.site.urls),
     path('', homepage),
     path('report/', report),
-]
+    path("register", views.register_request, name="register"),
+    path("login", views.login_request, name="login"),
+    path("logout", views.logout_request, name= "logout"),
 
+    path('accounts/', include('allauth.urls')),
+    path("monitorsites_check/(?P<pk>\w+)/$", check_now),
+]
 
 
 urlpatterns = urlpatterns + [
     # Monitor Sites
+    url(r'^monitorsites_check/(?P<pk>\w+)/$', check_now),
     url(r'^monitorsites/$', MonitorSiteList.as_view(), name='montiorsites_list'),
     # Forms
     url(r'^monitorsites_add/$', MonitorSiteCreate.as_view(), name='monitorsites_add'),

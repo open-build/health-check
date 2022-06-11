@@ -6,19 +6,39 @@
 
 <div class="contenedor">
 <!-- Default panel contents -->
+<h3>Monitor Sites/Apps and More </h3>
+<p>A list of sites you are currently Monitoring.  If you haven't set one up yet... <a href="/monitorsites_add/">what are you waiting for?</a></p>
 {% if getSites %}
-    {% for site in getSites %}
+
         <div class='panel panel-default'>
-            <div>
-              <a href="/monitorsites_update/{{ site.id }}" class="btn btn-xs btn-success">{{ site.name|truncatechars:85 }}</a>
-            </div>
+          <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">URL</th>
+              <th scope="col">Status</th>
+              <th scope="col">SSL</th>
+              <th scope="col">Last Checked</th>
+              <th scope="col">Check Now</th>
+            </tr>
+          </thead>
+          {% for site in getSites %}
+            <tr>
+              <th scope="row"><a href="/monitorsites_update/{{ site.id }}">{{ site.name|truncatechars:85 }}</a></th>
+              <td><a href="{{ site.url }}">{{ site.url }}</a></td>
+              <td>{{ site.status|truncatechars:85 }}</td>
+              <td>{{ site.ssl_status|truncatechars:85 }}</td>
+              <td>{{ site.last_polled_date_time|truncatechars:85 }}</td>
+              <td><a href="/monitorsites_check/{{ site.id }}" class="btn btn-xs btn-success"> CHECK NOW </a></td>
+            </tr>
+          {% endfor %}
+          </table>
         </div>
 
-    {% endfor %}
 {% else %}
     <p>No Sites</p>
-    <a href="/monitorsites_add/" class="btn btn-xs btn-success">New Site</a>
 {% endif %}
+  <a href="/monitorsites_add/" class="btn btn-xs btn-success">New Site</a>
 </div>
 
 
