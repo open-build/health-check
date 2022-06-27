@@ -36,3 +36,31 @@ class MonitorSiteAdmin(admin.ModelAdmin):
     search_fields = ('name','owner','status')
     list_filter = ('name',)
     display = 'Montior Sites'
+
+
+class MonitorSiteEntry(models.Model):
+    site = models.ForeignKey(MonitorSite, null=False, on_delete=models.CASCADE)
+    status = models.CharField(max_length=255, blank=True)
+    url_message = models.CharField(max_length=255, blank=True)
+    ssl_expirtaion = models.DateTimeField(null=True, blank=True)
+    ssl_status = models.CharField(max_length=255, blank=True)
+    ssl_message = models.CharField(max_length=255, blank=True)
+    create_date = models.DateTimeField(null=True, blank=True)
+    edit_date = models.DateTimeField(null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        # onsave add create date or update edit date
+        if self.create_date == None:
+            self.create_date = timezone.now()
+        self.edit_date = timezone.now()
+        super(MonitorSiteEntry, self).save(*args, **kwargs)
+
+
+class MonitorSiteEntryAdmin(admin.ModelAdmin):
+    list_display = ('site','status','create_date','edit_date')
+    search_fields = ('site__name','status')
+    list_filter = ('site__name','status')
+    display = 'Montior Site Entries'

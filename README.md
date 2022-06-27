@@ -15,3 +15,6 @@ Then Run Migrations
 
 Then Run the Test server
 ``python manage.py runserver``
+
+Create a SuperUser
+``python manage.py createsuperuser``

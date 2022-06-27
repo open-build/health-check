@@ -15,7 +15,7 @@ ENV PYTHONUNBUFFERED=1 \
 RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
     build-essential \
     libpq-dev \
-    libssl-dev \ 
+    libssl-dev \
     libffi-dev \
     libmariadbclient-dev \
     libjpeg62-turbo-dev \
@@ -37,6 +37,17 @@ RUN pip install -r /requirements.txt
 # Use /app folder as a directory where the source code is stored.
 WORKDIR /app
 
+# Set this directory to be owned by the "wagtail" user. This Wagtail project
+# uses SQLite, the folder needs to be owned by the user that
+# will be writing to the database file.
+RUN chown wagtail:wagtail /app
+
+# Copy the source code of the project into the container.
+COPY --chown=wagtail:wagtail . .
+
+# Use user "wagtail" to run the build commands below and the server itself.
+USER wagtail
+
 # Collect static files.
 RUN python manage.py collectstatic --noinput --clear
 
@@ -50,3 +61,6 @@ RUN python manage.py collectstatic --noinput --clear
 #   phase facilities of your hosting platform. This is used only so the
 #   instance can be started with a simple "docker run" command.
 CMD set -xe; python manage.py migrate --noinput; gunicorn mysite.wsgi:application
+
+# set up Cron
+RUN python manage.py crontab add

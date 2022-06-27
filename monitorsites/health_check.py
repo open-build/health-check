@@ -4,7 +4,10 @@ import requests
 import datetime
 import io
 import sys
-from .models import MonitorSite
+import os
+from .models import MonitorSite, MonitorSiteEntry
+
+from .ssl_check import check_it_out
 
 DELAY = 60  # Delay between site queries
 EMAIL_INTERVAL = 1800  # Delay between alert emails
@@ -54,7 +57,7 @@ def send_alert(site, status):
     subject='Open Build Health Check alert for ' + site,
     html_content=site + status)
 
-    sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+    sg = SendGridAPIClient(os.environ.get('SENDGRID'))
     response = sg.send(message)
     print(response.status_code)
     print(response.body)
@@ -69,22 +72,12 @@ def ping(site):
     return resp.status_code
 
 def check_all_sites():
-    sites = get_sites()
+    sites = MonitorSite.objects.all()
 
     for site in sites:
-        last_email_time[site] = 0  # Initialize timestamp as 0
-
-    while sites:
-        for site in sites:
-            status = ping(site)
-            if status == 200:
-                sys.stdout.flush()
-            else:
-                error_log(site, status)
-                send_alert(site, status)
+        check_now(site)
         sleep(DELAY)
-    else:
-        print("No site(s) input to monitor!")
+
 
 def ssl_check(url):
     import OpenSSL
@@ -93,25 +86,22 @@ def ssl_check(url):
     # get domain
     domain = url
 
-    # get SSL Cert info
-    cert = ssl.get_server_certificate((domain, 443))
-    x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, cert)
-    x509info = x509.get_notAfter()
+    # return object
+    check = {'error': None,'cert': None, 'exp_date': None,'error_level': None,'message': "Success"}
 
-    exp_day = x509info[6:8].decode('utf-8')
-    exp_month = x509info[4:6].decode('utf-8')
-    exp_year = x509info[:4].decode('utf-8')
+    hostname = domain.replace("https://","")
+    port = 443
 
-    exp_date =  str(exp_year) + "-" + str(exp_month) + "-" + str(exp_day)
+    status = check_it_out(hostname,port)
 
-    return exp_date
+    return status
 
 
 def check_now(site_to_check):
     site = MonitorSite.objects.get(id=site_to_check)
     url2check = "https://" + site.url
     new_status = ping(url2check)
-    ssl_expiry_date = ssl_check(url2check)
+    ssl_state = ssl_check(url2check)
     if new_status == 200:
         message = "200"
     else:
@@ -122,14 +112,24 @@ def check_now(site_to_check):
     # update model
     CurrentDate = datetime.datetime.now().date()
 
-    ssl_expiry_date_datetime_object = datetime.date.fromisoformat(ssl_expiry_date)
-    if CurrentDate > ssl_expiry_date_datetime_object:
-        new_ssl_status="expired"
-    else:
-        new_ssl_status="current"
-    MonitorSite.objects.filter(id=site_to_check).update(status=new_status,last_polled_date_time=CurrentDate,ssl_status=new_ssl_status,ssl_expirtaion=ssl_expiry_date_datetime_object)
+    print(ssl_state.cert)
 
-    return str(new_status) + " :: " + str(("SSL Certificate for domain", site_to_check, "will be expired on (YYYY-MM-DD)", ssl_expiry_date_datetime_object))
+    if ssl_state.cert.not_valid_after:
+        ssl_expiry_date_datetime_object = ssl_state.cert.not_valid_after.date()
+
+        if CurrentDate > ssl_expiry_date_datetime_object:
+            new_ssl_status="expired"
+        else:
+            new_ssl_status="current"
+    else:
+        new_ssl_status = "Error:" + str(ssl_state.get('error'))
+        ssl_expiry_date_datetime_object = None
+
+    MonitorSite.objects.filter(id=site_to_check).update(status=new_status,last_polled_date_time=CurrentDate,ssl_status=new_ssl_status,ssl_expirtaion=ssl_expiry_date_datetime_object)
+    MonitorSiteEntry.objects.create(site=site,status=new_status,ssl_status=new_ssl_status,
+    ssl_expirtaion=ssl_expiry_date_datetime_object,url_message=new_status,
+    ssl_message=ssl_state.cert.issuer)
+    return str(new_status) + " :: " + str(("SSL Certificate for domain", site_to_check, " will expire on (YYYY-MM-DD)", ssl_expiry_date_datetime_object, " issuer: " ,ssl_state.cert.issuer))
 
 
 if __name__ == '__main__':

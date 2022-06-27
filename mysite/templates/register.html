@@ -5,15 +5,17 @@
 {% load crispy_forms_tags %}
 
 <!--Register-->
-<div class="contenedor">
-  <div class="container py-5">
-  	<h1>Register</h1>
-    <div class=" signin text-center">
+<div class="card">
+  <div class="card-body" style="text-align: center; align: middle;">
+    <div class="card-header">
+    	<h1>Register</h1>
     </div>
   	<form method="POST">
+      <div class="form-floating mb-3">
   		{% csrf_token %}
   		{{ register_form|crispy }}
   		<button class="btn btn-primary" type="submit">Register</button>
+      </div>
   	</form>
   	<p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
   </div>

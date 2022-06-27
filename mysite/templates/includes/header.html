@@ -25,6 +25,10 @@
   </div>
 
 </header>
-<div class="error">
-  {{ message }}
+<div class="contenedor">
+{% if messages %}
+  {% for x in messages %}
+    {{ x }}
+  {% endfor %}
+{% endif %}
 </div>

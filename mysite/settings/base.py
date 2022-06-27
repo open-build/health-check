@@ -35,10 +35,12 @@ INSTALLED_APPS = [
     'django_social_share',
 
     'monitorsites',
-    
+
     # forms
     'colorful',
     'crispy_forms',
+
+    'django_crontab',
 
     # auth
     'django.contrib.sites',
@@ -173,6 +175,10 @@ STATICFILES_FINDERS = [
 
 STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, 'static'),
+]
+
+CRONJOBS = [
+    ('*/5 * * * *', 'mysite.cron.my_scheduled_job')
 ]
 
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
