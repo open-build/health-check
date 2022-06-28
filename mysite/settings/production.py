@@ -7,7 +7,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'health',
         'PASSWORD': os.environ.get("PASSWORD"),
-        'USER': 'cms_user',
+        'USER': 'health',
         'HOST': 'db-mysql-nyc3-97229-do-user-2508039-0.b.db.ondigitalocean.com',
         'PORT': '25060',
     }
