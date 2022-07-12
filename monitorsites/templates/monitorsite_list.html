@@ -21,6 +21,7 @@
               <th scope="col">SSL Expiration</th>
               <th scope="col">Last Checked</th>
               <th scope="col">Check Now</th>
+              <th scope="col">Report</th>
             </tr>
           </thead>
           {% for site in getSites %}
@@ -32,6 +33,7 @@
               <td>{{ site.ssl_expirtaion|truncatechars:85 }}</td>
               <td>{{ site.last_polled_date_time|truncatechars:85 }}</td>
               <td><a href="/monitorsites_check/{{ site.id }}" class="btn btn-xs btn-success"> CHECK NOW </a></td>
+              <td><a href="/report/{{ site.id }}" class="btn btn-xs btn-success"> HISTORY </a></td>
             </tr>
           {% endfor %}
           </table>

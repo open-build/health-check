@@ -64,3 +64,29 @@ class MonitorSiteEntryAdmin(admin.ModelAdmin):
     search_fields = ('site__name','status')
     list_filter = ('site__name','status')
     display = 'Montior Site Entries'
+
+
+class Plan(models.Model):
+    site = models.ForeignKey(MonitorSite, null=False, on_delete=models.CASCADE)
+    is_paid = models.Boolean(default=False)
+    plan = models.CharField(max_length=255, blank=True)
+    expriation_date = models.DateTimeField(null=True, blank=True)
+    create_date = models.DateTimeField(null=True, blank=True)
+    edit_date = models.DateTimeField(null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        # onsave add create date or update edit date
+        if self.create_date == None:
+            self.create_date = timezone.now()
+        self.edit_date = timezone.now()
+        super(Plan, self).save(*args, **kwargs)
+
+
+class PlanAdmin(admin.ModelAdmin):
+    list_display = ('site','is_paid','plan','create_date','edit_date')
+    search_fields = ('site__name','is_paid')
+    list_filter = ('site__name','is_paid')
+    display = 'Payment Plans'

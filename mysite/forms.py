@@ -8,6 +8,10 @@ from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+# paypal
+from django.views.generic import FormView
+from paypal.standard.forms import PayPalPaymentsForm
+
 # User Forms
 class NewUserForm(UserCreationForm):
 	email = forms.EmailField(required=True)
@@ -22,3 +26,21 @@ class NewUserForm(UserCreationForm):
 		if commit:
 			user.save()
 		return user
+
+class PaypalFormView(FormView):
+    template_name = 'paypal_form.html'
+    form_class = PayPalPaymentsForm
+
+    def get_initial(self):
+        return {
+            "business": 'health@open.build',
+            "amount": 20,
+            "currency_code": "USD",
+            "item_name": 'Annual Monitoring',
+            "invoice": 1,
+            "notify_url": self.request.build_absolute_uri(reverse('paypal-ipn')),
+            "return_url": self.request.build_absolute_uri(reverse('paypal-return')),
+            "cancel_return": self.request.build_absolute_uri(reverse('paypal-cancel')),
+            "lc": 'EN',
+            "no_shipping": '1',
+        }

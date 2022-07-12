@@ -10,10 +10,15 @@ from monitorsites.views import homepage,report,check_now
 urlpatterns = [
     path('django-admin/', admin.site.urls),
     path('', homepage),
-    path('report/', report),
+    path(r'^report/(?P<pk>\w+)/$', report),
     path("register", views.register_request, name="register"),
     path("login", views.login_request, name="login"),
     path("logout", views.logout_request, name= "logout"),
+
+    # Paypal forms
+    path('paypal/', include('paypal.standard.ipn.urls')),
+    path('/paypal-return/', views.PaypalReturnView.as_view(), name='paypal-return'),
+    path('/paypal-cancel/', views.PaypalCancelView.as_view(), name='paypal-cancel'),
 
     path('accounts/', include('allauth.urls')),
     path("monitorsites_check/(?P<pk>\w+)/$", check_now),

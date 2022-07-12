@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_social_share',
 
+    'paypal.standard.ipn',
+
     'monitorsites',
 
     # forms

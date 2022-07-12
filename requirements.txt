@@ -7,3 +7,4 @@ django_social_share
 django-allauth
 pyopenssl
 django-crontab
+django-paypal

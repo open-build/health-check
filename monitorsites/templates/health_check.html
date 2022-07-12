@@ -12,7 +12,30 @@
 
 <div class="contenedor">
   <h4>Health Check </h4>
-  <p>{{ message }}</p>
+
+  <div class='panel panel-default'>
+    <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">URL</th>
+        <th scope="col">Status</th>
+        <th scope="col">SSL</th>
+        <th scope="col">SSL Expiration</th>
+        <th scope="col">Last Checked</th>
+      </tr>
+    </thead>
+      <tr>
+        <th scope="row"><a href="/monitorsites_update/{{ site.id }}">{{ message.name }}</a></th>
+        <td><a href="https://{{ site.url }}" target="_new">{{ message.url }}</a></td>
+        <td>{{ message.status }}</td>
+        <td>{{ message.ssl_status}}</td>
+        <td>{{ message.ssl_expirtaion }}</td>
+        <td>{{ message.last_polled_date_time }}</td>
+      </tr>
+
+    </table>
+  </div>
     <a href="/monitorsites/" class="btn btn-xs btn-success">Back to Sites</a>
 </div>
 

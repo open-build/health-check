@@ -15,7 +15,7 @@ from django.shortcuts import redirect
 
 from .health_check import check_now as check_site
 
-from .models import MonitorSite
+from .models import MonitorSite, MonitorSiteReport
 from .forms import MonitorSiteForm
 
 class MyView(LoginRequiredMixin, View):
@@ -29,9 +29,15 @@ def homepage(request):
     return render(request, 'home_page.html')
 
 @login_required(login_url='/')
-def report(request):
+def report(request,pk):
     """View function for report page of site."""
+    model = MonitorSiteEntry
 
+    def get(self, request, *args, **kwargs):
+
+        getReport = MonitorSiteEntry.objects.get(site.id=self.kwargs.get('pk'))
+
+        return render(request, self.template_name, {'getReport': getReport,})
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'report.html')
 
