@@ -10,7 +10,6 @@ from monitorsites.views import homepage,report,check_now
 urlpatterns = [
     path('django-admin/', admin.site.urls),
     path('', homepage),
-    path(r'^report/(?P<pk>\w+)/$', report),
     path("register", views.register_request, name="register"),
     path("login", views.login_request, name="login"),
     path("logout", views.logout_request, name= "logout"),
@@ -28,6 +27,7 @@ urlpatterns = [
 urlpatterns = urlpatterns + [
     # Monitor Sites
     url(r'^monitorsites_check/(?P<pk>\w+)/$', check_now),
+    url(r'^report/(?P<pk>\w+)/$', report),
     url(r'^monitorsites/$', MonitorSiteList.as_view(), name='montiorsites_list'),
     # Forms
     url(r'^monitorsites_add/$', MonitorSiteCreate.as_view(), name='monitorsites_add'),
