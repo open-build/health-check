@@ -15,7 +15,7 @@ from django.shortcuts import redirect
 
 from .health_check import check_now as check_site
 
-from .models import MonitorSite, MonitorSiteReport
+from .models import MonitorSite, MonitorSiteEntry
 from .forms import MonitorSiteForm
 
 class MyView(LoginRequiredMixin, View):
