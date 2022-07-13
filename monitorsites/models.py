@@ -68,7 +68,7 @@ class MonitorSiteEntryAdmin(admin.ModelAdmin):
 
 class Plan(models.Model):
     site = models.ForeignKey(MonitorSite, null=False, on_delete=models.CASCADE)
-    is_paid = models.Boolean(default=False)
+    is_paid = models.BooleanField(default=False)
     plan = models.CharField(max_length=255, blank=True)
     expriation_date = models.DateTimeField(null=True, blank=True)
     create_date = models.DateTimeField(null=True, blank=True)
