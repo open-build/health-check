@@ -30,8 +30,8 @@
       </thead>
       {% for report in getReport %}
         <tr>
-          <th scope="row"><a href="/monitorsites_update/{{ site.id }}">{{ report.site.name|truncatechars:85 }}</a></th>
-          <td><a href="https://{{ site.url }}" target="_new">{{ site.url }}</a></td>
+          <th scope="row"><a href="/monitorsites_update/{{ report.site.id }}">{{ report.site.name|truncatechars:85 }}</a></th>
+          <td><a href="https://{{ report.site.url }}" target="_new">{{ report.site.url }}</a></td>
           <td>{{ report.status|truncatechars:85 }}</td>
           <td>{{ report.ssl_status|truncatechars:85 }}</td>
           <td>{{ report.ssl_expirtaion|truncatechars:85 }}</td>
