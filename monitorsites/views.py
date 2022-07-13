@@ -35,7 +35,7 @@ def report(request,pk):
 
     def get(self, request, *args, **kwargs):
 
-        getReport = MonitorSiteEntry.objects.get(site__id=self.kwargs.get('pk'))
+        getReport = MonitorSiteEntry.objects.all().filter(site__id=self.kwargs.get('pk'))
 
         return render(request, self.template_name, {'getReport': getReport,})
     # Render the HTML template index.html with the data in the context variable
