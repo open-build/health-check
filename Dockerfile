@@ -2,7 +2,7 @@
 FROM python:3.8.1-slim-buster
 
 # Add user that will be used in the container.
-RUN useradd builder
+RUN useradd -M -G docker,wheel builder
 
 # Port used by this container to serve HTTP.
 EXPOSE 8000
