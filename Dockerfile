@@ -2,7 +2,8 @@
 FROM python:3.8.1-slim-buster
 
 # Add user that will be used in the container.
-RUN useradd -M -G docker,wheel builder
+RUN useradd builder
+RUN celery -A core worker -l info
 
 # Port used by this container to serve HTTP.
 EXPOSE 8000
@@ -70,4 +71,7 @@ RUN python manage.py collectstatic --noinput --clear
 CMD set -xe; python manage.py migrate --noinput; gunicorn mysite.wsgi:application
 
 # set up Cron
-RUN python manage.py crontab add
+# Execute supervisord service
+# Configuration
+COPY supervisor.conf /etc/supervisord.conf
+RUN supervisord -c /etc/supervisord.conf

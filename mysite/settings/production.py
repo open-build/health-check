@@ -21,3 +21,7 @@ try:
     from .local import *
 except ImportError:
     pass
+
+CRON_JOBS = {
+    'cron': '*/5 * * * *'
+}
