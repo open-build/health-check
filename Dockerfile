@@ -36,7 +36,7 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
 
 
 # Fix permissions on crontab
-RUN celery -A core worker -l info
+RUN celery -A tasks worker --loglevel=INFO
 RUN chmod u=rwx,g=wxs,o=t /var/spool/cron/crontabs
 
 # Install the application server.
