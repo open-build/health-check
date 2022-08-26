@@ -31,6 +31,7 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     build-essential \
     celery \
     sudo \
+    supervisor \
     cron \
  && rm -rf /var/lib/apt/lists/*
 
