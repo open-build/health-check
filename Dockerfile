@@ -75,5 +75,5 @@ CMD set -xe; python manage.py migrate --noinput; gunicorn mysite.wsgi:applicatio
 # Execute supervisord service
 # Configuration
 COPY supervisor.conf /etc/supervisord.conf
-RUN supervisord -c /etc/supervisord.conf
+CMD /usr/bin/supervisord -c /etc/supervisord.conf
 RUN celery -A tasks worker --loglevel=INFO
