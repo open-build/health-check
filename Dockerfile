@@ -36,7 +36,6 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
 
 
 # Fix permissions on crontab
-RUN celery -A tasks worker --loglevel=INFO
 RUN chmod u=rwx,g=wxs,o=t /var/spool/cron/crontabs
 
 # Install the application server.
@@ -77,3 +76,4 @@ CMD set -xe; python manage.py migrate --noinput; gunicorn mysite.wsgi:applicatio
 # Configuration
 COPY supervisor.conf /etc/supervisord.conf
 RUN supervisord -c /etc/supervisord.conf
+RUN celery -A tasks worker --loglevel=INFO
