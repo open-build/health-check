@@ -20,7 +20,8 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     libpq-dev \
     libssl-dev \
     libffi-dev \
-    libmariadbclient-dev \
+    libmariadb-dev-compat \
+    libmariadb-dev \
     libjpeg62-turbo-dev \
     zlib1g-dev \
     libwebp-dev \
