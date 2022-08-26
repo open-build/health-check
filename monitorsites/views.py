@@ -96,20 +96,19 @@ class MonitorSiteUpdate(UpdateView,LoginRequiredMixin,):
     """
     model = MonitorSite
     template_name = 'monitorsite_form.html'
-    fields = ['name','url','polling_interval','description','status']
+
     def get_form_kwargs(self):
         kwargs = super(MonitorSiteUpdate, self).get_form_kwargs()
-        #kwargs["action_name"] = "monitorsites_update"
-        #kwargs['request'] = self.request
+        kwargs["action_name"] = "monitorsites_update"
+        kwargs['request'] = self.request
         return kwargs
+
     def form_invalid(self, form):
         messages.error(self.request, 'Invalid Form', fail_silently=False)
         return render(self.get_context_data(form=form))
 
     def form_valid(self, form):
-        site = MonitorSite.objects.get(pk=self.kwargs.get('pk'))
-        self.object = form.save()
-
+        form.save()
         messages.success(self.request, 'Success, Monitored Site Updated!')
 
         return redirect('/monitorsites/')
