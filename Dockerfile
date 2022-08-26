@@ -29,6 +29,7 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     default-libmysqlclient-dev \
     default-mysql-client \
     build-essential \
+    celery \
     sudo \
     cron \
  && rm -rf /var/lib/apt/lists/*
