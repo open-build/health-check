@@ -3,7 +3,6 @@ FROM python:3.8.1-slim-buster
 
 # Add user that will be used in the container.
 RUN useradd builder
-RUN celery -A core worker -l info
 
 # Port used by this container to serve HTTP.
 EXPOSE 8000
@@ -36,6 +35,7 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
 
 
 # Fix permissions on crontab
+RUN celery -A core worker -l info
 RUN chmod u=rwx,g=wxs,o=t /var/spool/cron/crontabs
 
 # Install the application server.
