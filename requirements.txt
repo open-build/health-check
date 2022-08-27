@@ -8,3 +8,4 @@ django-allauth
 pyopenssl
 django-crontab
 django-paypal
+sentry-sdk
