@@ -76,4 +76,8 @@ CMD set -xe; python manage.py migrate --noinput; gunicorn mysite.wsgi:applicatio
 # Execute supervisord service
 # Configuration
 COPY supervisor.conf /etc/supervisord.conf
+RUN mkdir /app/logs
+RUN chmod u=rwx,g=wxs,o=t /app/logs
+CMD touch /app/supervisord.log
+RUN chmod u=rwx,g=wxs,o=t /app/supervisord.log
 CMD /usr/bin/supervisord -c /etc/supervisord.conf
