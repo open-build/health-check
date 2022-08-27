@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_forms',
 
     'django_crontab',
+    'django_q',
 
     # auth
     'django.contrib.sites',

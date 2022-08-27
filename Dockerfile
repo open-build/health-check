@@ -35,7 +35,6 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     cron \
  && rm -rf /var/lib/apt/lists/*
 
-
 # Fix permissions on crontab
 RUN chmod u=rwx,g=wxs,o=t /var/spool/cron/crontabs
 
@@ -61,6 +60,9 @@ USER builder
 # Collect static files.
 RUN python manage.py collectstatic --noinput --clear
 
+# setup q
+RUN python manage.py qcluster
+
 # Runtime command that executes when "docker run" is called, it does the
 # following:
 #   1. Migrate the database.
@@ -71,13 +73,3 @@ RUN python manage.py collectstatic --noinput --clear
 #   phase facilities of your hosting platform. This is used only so the
 #   instance can be started with a simple "docker run" command.
 CMD set -xe; python manage.py migrate --noinput; gunicorn mysite.wsgi:application
-
-# set up Cron
-# Execute supervisord service
-# Configuration
-COPY supervisor.conf /etc/supervisord.conf
-CMD mkdir /logs
-CMD chmod u=rwx,g=wxs,o=t /logs
-CMD touch /logs/supervisord.log
-CMD chmod u=rwx,g=wxs,o=t /logs/supervisord.log
-CMD /usr/bin/supervisord -c /etc/supervisord.conf
