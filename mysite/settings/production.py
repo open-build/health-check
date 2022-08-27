@@ -13,7 +13,7 @@ DATABASES = {
     }
 }
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['seahorse-app-mrqwo.ondigitalocean.app', 'open.build', '127.0.0.1', '[::1]','health.open.build',]
 
