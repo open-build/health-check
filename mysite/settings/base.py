@@ -206,7 +206,7 @@ SECRET_KEY = "sdfgerg32gasd90uadafgjo1s2!@89u9ergj9249889"
 # Configure your Q cluster
 # More details https://django-q.readthedocs.io/en/latest/configure.html
 Q_CLUSTER = {
-   'retry': 5
+   'retry': 5,
    'workers': 4,
    'orm': 'default',
 }
