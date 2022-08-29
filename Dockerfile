@@ -60,6 +60,9 @@ USER builder
 # Collect static files.
 RUN python manage.py collectstatic --noinput --clear
 
+# MAKE MIGRATIONS
+RUN python manage.py makemigrations --clear
+
 # Runtime command that executes when "docker run" is called, it does the
 # following:
 #   1. Migrate the database.
