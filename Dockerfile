@@ -60,9 +60,6 @@ USER builder
 # Collect static files.
 RUN python manage.py collectstatic --noinput --clear
 
-# setup q
-RUN python manage.py qcluster
-
 # Runtime command that executes when "docker run" is called, it does the
 # following:
 #   1. Migrate the database.
@@ -73,3 +70,6 @@ RUN python manage.py qcluster
 #   phase facilities of your hosting platform. This is used only so the
 #   instance can be started with a simple "docker run" command.
 CMD set -xe; python manage.py migrate --noinput --database; gunicorn mysite.wsgi:application
+
+# setup q
+RUN python manage.py qcluster
