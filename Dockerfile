@@ -72,4 +72,4 @@ RUN python manage.py collectstatic --noinput --clear
 CMD set -xe; python manage.py migrate --noinput --database; gunicorn mysite.wsgi:application
 
 # setup q
-RUN python manage.py qcluster
+CMD python manage.py qcluster
