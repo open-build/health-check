@@ -58,7 +58,7 @@ COPY --chown=builder:builder . .
 USER builder
 
 # Collect static files.
-RUN python3 manage.py collectstatic --noinput --clear
+CMD python3 manage.py collectstatic --noinput --clear
 
 # MAKE MIGRATIONS
 CMD python3 manage.py makemigrations
