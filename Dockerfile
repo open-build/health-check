@@ -39,11 +39,11 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
 RUN chmod u=rwx,g=wxs,o=t /var/spool/cron/crontabs
 
 # Install the application server.
-RUN pip3 install "gunicorn==20.0.4" --user
+RUN pip3 install "gunicorn==20.0.4" --user builder
 
 # Install the project requirements.
 COPY requirements.txt /
-RUN pip3 install -r /requirements.txt --user
+RUN pip3 install -r /requirements.txt --user builder
 
 # Use /app folder as a directory where the source code is stored.
 WORKDIR /app
