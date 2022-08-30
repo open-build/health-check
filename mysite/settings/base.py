@@ -103,7 +103,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cms',
+        'NAME': 'health',
         'PASSWORD': os.environ.get("PASSWORD"),
         'USER': 'cms_user',
         'HOST': 'db-mysql-nyc3-97229-do-user-2508039-0.b.db.ondigitalocean.com',
@@ -212,5 +212,5 @@ Q_CLUSTER = {
     'retry': 120,
     'queue_limit': 50,
     'bulk': 10,
-    'orm': 'cms'
+    'orm': 'default'
 }
