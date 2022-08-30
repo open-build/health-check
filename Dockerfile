@@ -54,14 +54,19 @@ RUN chown builder:builder /app
 # Copy the source code of the project into the container.
 COPY --chown=builder:builder . .
 
+# MAKE MIGRATIONS
+RUN python3 manage.py makemigrations
+
+# setup q
+RUN python3 manage.py qcluster
+RUN python3 django-admin qcluster
+
+
 # Use user "builder" to run the build commands below and the server itself.
 USER builder
 
 # Collect static files.
 CMD python3 manage.py collectstatic --noinput --clear
-
-# MAKE MIGRATIONS
-CMD python3 manage.py makemigrations
 
 # Runtime command that executes when "docker run" is called, it does the
 # following:
@@ -73,7 +78,3 @@ CMD python3 manage.py makemigrations
 #   phase facilities of your hosting platform. This is used only so the
 #   instance can be started with a simple "docker run" command.
 CMD set -xe; python3 manage.py migrate --noinput --database; gunicorn mysite.wsgi:application
-
-# setup q
-CMD python3 django-admin qcluster
-CMD python3 manage.py qcluster
