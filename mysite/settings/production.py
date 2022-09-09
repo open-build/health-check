@@ -48,3 +48,15 @@ sentry_sdk.init(
     # something more human-readable.
     # release="myapp@1.0.0",
 )
+
+# Configure your Q cluster
+# More details https://django-q.readthedocs.io/en/latest/configure.html
+Q_CLUSTER = {
+    'name': 'DjangORM',
+    'workers': 4,
+    'timeout': 90,
+    'retry': 120,
+    'queue_limit': 50,
+    'bulk': 10,
+    'orm': 'default'
+}
