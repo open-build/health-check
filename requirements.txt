@@ -9,4 +9,6 @@ pyopenssl
 django-crontab
 django-paypal
 sentry-sdk
+celery
+redis
 django-q
