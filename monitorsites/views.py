@@ -77,12 +77,13 @@ class MonitorSiteCreate(CreateView,LoginRequiredMixin,):
 
     def get_form_kwargs(self):
         kwargs = super(MonitorSiteCreate, self).get_form_kwargs()
-        kwargs["action_name"] = "monitorsites_add"
         kwargs['request'] = self.request
         return kwargs
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        form.instance.url = form.instance.url.replace("http://","")
+        form.instance.url = form.instance.url.replace("https://","")
         form.save()
         messages.success(self.request, 'Success, Monitored Site Created!')
         return redirect('/monitorsites/')
@@ -96,10 +97,10 @@ class MonitorSiteUpdate(UpdateView,LoginRequiredMixin,):
     """
     model = MonitorSite
     template_name = 'monitorsite_form.html'
+    form_class = MonitorSiteForm
 
     def get_form_kwargs(self):
         kwargs = super(MonitorSiteUpdate, self).get_form_kwargs()
-        kwargs["action_name"] = "monitorsites_update"
         kwargs['request'] = self.request
         return kwargs
 
@@ -108,6 +109,8 @@ class MonitorSiteUpdate(UpdateView,LoginRequiredMixin,):
         return render(self.get_context_data(form=form))
 
     def form_valid(self, form):
+        form.instance.url = form.instance.url.replace("http://","")
+        form.instance.url = form.instance.url.replace("https://","")
         form.save()
         messages.success(self.request, 'Success, Monitored Site Updated!')
 

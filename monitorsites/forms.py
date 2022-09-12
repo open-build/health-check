@@ -21,7 +21,6 @@ class MonitorSiteForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         # get rid of extra keywords before calling super
-        self.helper.form_action = reverse(kwargs.pop('action_name',False))
         self.request = kwargs.pop('request')
         # call super to get form fields
         super(MonitorSiteForm, self).__init__(*args, **kwargs)
