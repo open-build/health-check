@@ -73,4 +73,4 @@ CMD python3 manage.py collectstatic --noinput --clear
 #   PRACTICE. The database should be migrated manually or using the release
 #   phase facilities of your hosting platform. This is used only so the
 #   instance can be started with a simple "docker run" command.
-CMD set -xe; python3 manage.py migrate; gunicorn mysite.wsgi:application
+CMD set -xe; gunicorn mysite.wsgi:application
