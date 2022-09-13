@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from celery.schedules import crontab
 import os
 from os.path import join, normpath
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
 
     'django_crontab',
     'django_q',
+    'django_celery_beat',
 
     # auth
     'django.contrib.sites',
