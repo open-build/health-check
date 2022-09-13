@@ -74,7 +74,3 @@ CMD python3 manage.py collectstatic --noinput --clear
 #   phase facilities of your hosting platform. This is used only so the
 #   instance can be started with a simple "docker run" command.
 CMD set -xe; python3 manage.py migrate --noinput --database; gunicorn mysite.wsgi:application
-
-# setup q
-# start redis
-CMD python3 manage.py qcluster
