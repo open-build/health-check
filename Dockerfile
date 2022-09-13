@@ -77,5 +77,4 @@ CMD set -xe; python3 manage.py migrate --noinput --database; gunicorn mysite.wsg
 
 # setup q
 # start redis
-CMD service redis-server start
 CMD python3 manage.py qcluster
