@@ -80,4 +80,3 @@ CMD set -xe; python3 manage.py migrate --noinput --database; gunicorn mysite.wsg
 
 # setup q
 CMD python3 manage.py qcluster
-CMD python3 django-admin qcluster
