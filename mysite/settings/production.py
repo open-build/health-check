@@ -50,6 +50,22 @@ sentry_sdk.init(
     # release="myapp@1.0.0",
 )
 
+#redis
+redis_host = os.environ.get('REDIS_HOST', 'localhost')
+# Channel layer definitions
+# http://channels.readthedocs.org/en/latest/deploying.html#setting-up-a-channel-backend
+CHANNEL_LAYERS = {
+    "default": {
+        # This example app uses the Redis channel layer implementation asgi_redis
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(redis_host, 6379)],
+        },
+        "ROUTING": "multichat.routing.channel_routing",
+    },
+}
+
+
 # Configure your Q cluster
 # More details https://django-q.readthedocs.io/en/latest/configure.html
 Q_CLUSTER = {
