@@ -72,7 +72,7 @@ Q_CLUSTER = {
 "default": {
     "HOST": "redis",
     "PORT": "6379",
-    "URL": os.getenv("REDISTOGO_URL", "redis://redis:6379"),  # If you're
+    "URL": os.getenv("REDISTOGO_URL", "redis://localhost:6379"),  # If you're
     "DB": 0,
     "DEFAULT_TIMEOUT": 480,
   }
