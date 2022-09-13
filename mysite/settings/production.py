@@ -69,7 +69,7 @@ CHANNEL_LAYERS = {
 # Configure your Q cluster
 # More details https://django-q.readthedocs.io/en/latest/configure.html
 Q_CLUSTER = {
-    'name': 'DjangORM',
+    'name': 'Djang Q',
     'workers': 4,
     'recycle': 500,
     'timeout': 60,
