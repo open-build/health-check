@@ -69,17 +69,11 @@ CHANNEL_LAYERS = {
 # Configure your Q cluster
 # More details https://django-q.readthedocs.io/en/latest/configure.html
 Q_CLUSTER = {
-    'name': 'Djang Q',
-    'workers': 4,
-    'recycle': 500,
-    'timeout': 60,
-    'compress': True,
-    'save_limit': 250,
-    'queue_limit': 500,
-    'cpu_affinity': 1,
-    'label': 'Django Q',
-    'redis': {
-        'host': '127.0.0.1',
-        'port': 6379,
-        'db': 0,
+"default": {
+    "HOST": "redis",
+    "PORT": "6379",
+    "URL": os.getenv("REDISTOGO_URL", "redis://redis:6379"),  # If you're
+    "DB": 0,
+    "DEFAULT_TIMEOUT": 480,
+  }
 }

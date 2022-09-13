@@ -42,9 +42,6 @@ RUN chmod u=rwx,g=wxs,o=t /var/spool/cron/crontabs
 # Install the application server.
 RUN pip3 install "gunicorn==20.0.4"
 
-# start redis
-RUN service redis-server start
-
 # Install the project requirements.
 COPY requirements.txt /
 RUN pip3 install -r /requirements.txt
@@ -79,4 +76,6 @@ CMD python3 manage.py collectstatic --noinput --clear
 CMD set -xe; python3 manage.py migrate --noinput --database; gunicorn mysite.wsgi:application
 
 # setup q
+# start redis
+CMD service redis-server start
 CMD python3 manage.py qcluster
