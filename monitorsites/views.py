@@ -18,6 +18,8 @@ from .health_check import check_now as check_site
 from .models import MonitorSite, MonitorSiteEntry
 from .forms import MonitorSiteForm
 
+from Wappalyzer import Wappalyzer, WebPage
+
 class MyView(LoginRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
@@ -35,9 +37,11 @@ def report(request,pk):
 
     def get(self, request, *args, **kwargs):
 
-        getReport = MonitorSiteEntry.objects.all().filter(site__id=self.kwargs.get('pk'))
-
-        return render(request, self.template_name, {'getReport': getReport,})
+        getReport = MonitorSiteEntry.objects.all().filter(site__id=pk)
+        webpage = WebPage.new_from_url(report.site.url)
+        wappalyzer = Wappalyzer.latest()
+        analysis = wappalyzer.analyze(webpage)
+        return render(request, self.template_name, {'getReport': getReport, 'wapp': analysis })
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'report.html')
 

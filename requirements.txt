@@ -13,3 +13,4 @@ celery
 redis
 django-celery-beat
 django-q
+python-Wappalyzer
