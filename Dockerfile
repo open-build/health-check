@@ -27,8 +27,9 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     libwebp-dev \
     libblas-dev \
     libatlas-base-dev \
+    libffi-dev \
     gcc \
-    python3-dev \
+    python3.11-dev \
     default-libmysqlclient-dev \
     default-mysql-client \
     build-essential \
