@@ -25,6 +25,9 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     libjpeg62-turbo-dev \
     zlib1g-dev \
     libwebp-dev \
+    libblas-dev \
+    libatlas-base-dev \
+    gcc \
     python3-dev \
     default-libmysqlclient-dev \
     default-mysql-client \
