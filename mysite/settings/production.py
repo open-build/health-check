@@ -45,7 +45,18 @@ sentry_sdk.init(
     # something more human-readable.
     # release="myapp@1.0.0",
 )
-
+CELERY_BEAT_SCHEDULE = {
+    # 'create_iclp_sensor_report': {
+    #     'task': 'sensor.services.tasks.create_iclp_sensor_report',
+    #     # execute every 15 minute with offset of 2
+    #     'schedule': crontab(minute='02,17,32,47'),
+    # },
+    'check_sites': {
+        'task': 'monitorsites.celery.tasks.my_scheduled_job',
+        # execute every 10 minute with offset of 2
+        'schedule': crontab(minute='03,13,23,33,43,53'),
+    }
+}
 
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', "locahost:6379")
 #: Only add pickle to this list if your broker is secured

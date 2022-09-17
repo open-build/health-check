@@ -72,4 +72,3 @@ CMD python3 manage.py collectstatic --noinput --clear
 #   phase facilities of your hosting platform. This is used only so the
 #   instance can be started with a simple "docker run" command.
 CMD set -xe; gunicorn mysite.wsgi:application
-CMD celery -A monitorsites worker -l INFO

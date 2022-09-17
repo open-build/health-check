@@ -34,9 +34,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_social_share',
-
     'paypal.standard.ipn',
-
+    'django_celery_beat',
     'monitorsites',
 
     # forms

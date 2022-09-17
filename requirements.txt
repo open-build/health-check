@@ -8,3 +8,5 @@ django-allauth
 pyopenssl
 django-paypal
 sentry-sdk
+django-celery-beat==1.6.0
+celery==4.4.1
