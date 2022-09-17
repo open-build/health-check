@@ -34,8 +34,8 @@
           <td><a href="https://{{ report.site.url }}" target="_new">{{ report.site.url }}</a></td>
           <td>{{ report.status|truncatechars:85 }}</td>
           <td>{{ report.ssl_status|truncatechars:85 }}</td>
-          <td>{{ report.ssl_expirtaion|truncatechars:85 }}</td>
-          <td>{{ report.last_polled_date_time|truncatechars:85 }}</td>
+          <td>{{ report.ssl_expirtaion|date:"SHORT_DATE_FORMAT" }}</td>
+          <td>{{ report.last_polled_date_time|date:"SHORT_DATE_FORMAT" }}</td>
         </tr>
       {% endfor %}
       </table>

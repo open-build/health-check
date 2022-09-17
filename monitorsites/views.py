@@ -17,8 +17,7 @@ from .health_check import check_now as check_site
 
 from .models import MonitorSite, MonitorSiteEntry
 from .forms import MonitorSiteForm
-
-from Wappalyzer import Wappalyzer, WebPage
+import requests
 
 class MyView(LoginRequiredMixin, View):
     login_url = '/login/'
@@ -38,9 +37,12 @@ def report(request,pk):
     def get(self, request, *args, **kwargs):
 
         getReport = MonitorSiteEntry.objects.all().filter(site__id=pk)
-        webpage = WebPage.new_from_url(report.site.url)
-        wappalyzer = Wappalyzer.latest()
-        analysis = wappalyzer.analyze(webpage)
+
+        url = 'https://api.wappalyzer.com/lookup/v2/?urls=' + <your url> + '&sets=email,phone,contact,social,meta,locale'
+        headers = {'x-api-key' : 'ufskVhLffl7keYV7UsHTm14GJH4NQgeAa72kdd4C'}
+        r = requests.get(url, headers=headers)
+        analysis = r.json()
+
         return render(request, self.template_name, {'getReport': getReport, 'wapp': analysis })
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'report.html')
