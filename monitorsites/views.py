@@ -38,7 +38,7 @@ def report(request,pk):
 
         getReport = MonitorSiteEntry.objects.all().filter(site__id=pk)
 
-        url = 'https://api.wappalyzer.com/lookup/v2/?urls=' + <your url> + '&sets=email,phone,contact,social,meta,locale'
+        url = 'https://api.wappalyzer.com/lookup/v2/?urls=' + getReport.url + '&sets=email,phone,contact,social,meta,locale'
         headers = {'x-api-key' : 'ufskVhLffl7keYV7UsHTm14GJH4NQgeAa72kdd4C'}
         r = requests.get(url, headers=headers)
         analysis = r.json()
