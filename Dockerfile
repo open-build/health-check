@@ -38,7 +38,6 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
 RUN chmod u=rwx,g=wxs,o=t /var/spool/cron/crontabs
 
 # Install the application server.
-RUN pip3 install --upgrade pip setuptools wheel
 RUN pip3 install "gunicorn==20.0.4"
 
 # Install the project requirements.
