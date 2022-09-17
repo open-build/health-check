@@ -16,3 +16,10 @@ app.autodiscover_tasks()
 @app.task(bind=True)
 def debug_task(self):
     print('Request: {0!r}'.format(self.request))
+
+
+from .health_check import check_all_sites
+
+@app.task(bind=True)
+def my_scheduled_job():
+    check_all_sites()

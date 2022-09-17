@@ -46,33 +46,10 @@ sentry_sdk.init(
     # release="myapp@1.0.0",
 )
 
-#redis
-redis_host = os.environ.get('REDIS_HOST', 'localhost')
-# Channel layer definitions
-# http://channels.readthedocs.org/en/latest/deploying.html#setting-up-a-channel-backend
-CHANNEL_LAYERS = {
-    "default": {
-        # This example app uses the Redis channel layer implementation asgi_redis
-        "BACKEND": "asgi_redis.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [(redis_host, 6379)],
-        },
-        "ROUTING": "multichat.routing.channel_routing",
-    },
-}
-
 
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', "locahost:6379")
-
-CELERY_BEAT_SCHEDULE = {
-    # 'create_iclp_sensor_report': {
-    #     'task': 'sensor.services.tasks.create_iclp_sensor_report',
-    #     # execute every 15 minute with offset of 2
-    #     'schedule': crontab(minute='02,17,32,47'),
-    # },
-    'create_tive_sensor_report': {
-        'task': 'management.cron.my_scheduled_job',
-        # execute every 10 minute with offset of 2
-        'schedule': crontab(minute='03,53'),
-    }
-}
+#: Only add pickle to this list if your broker is secured
+#: from unwanted access (see userguide/security.html)
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
+CELERY_TASK_SERIALIZER = 'json'

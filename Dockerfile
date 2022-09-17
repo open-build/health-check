@@ -43,7 +43,7 @@ RUN pip3 install "gunicorn==20.0.4"
 
 # Install the project requirements.
 COPY requirements.txt /
-RUN pip3 install -r /requirements.txt
+RUN pip install -r /requirements.txt
 
 # Use /app folder as a directory where the source code is stored.
 WORKDIR /app
@@ -73,3 +73,4 @@ CMD python3 manage.py collectstatic --noinput --clear
 #   phase facilities of your hosting platform. This is used only so the
 #   instance can be started with a simple "docker run" command.
 CMD set -xe; gunicorn mysite.wsgi:application
+CMD celery -A monitorsites worker -l INFO
