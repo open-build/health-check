@@ -28,6 +28,7 @@
           <th scope="col">Date Checked</th>
         </tr>
       </thead>
+      {{ getReport }}
       {% for report in getReport %}
         <tr>
           <th scope="row"><a href="/monitorsites_update/{{ report.site.id }}">{{ report.site.name|truncatechars:85 }}</a></th>
