@@ -22,9 +22,6 @@ try:
 except ImportError:
     pass
 
-CRON_JOBS = {
-    'cron': '*/5 * * * *'
-}
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -65,18 +62,6 @@ CHANNEL_LAYERS = {
 }
 
 
-# Configure your Q cluster
-# More details https://django-q.readthedocs.io/en/latest/configure.html
-Q_CLUSTER = {
-"default": {
-    "HOST": "redis",
-    "PORT": "6379",
-    "URL": os.getenv("REDISTOGO_URL", "redis://localhost:6379"),  # If you're
-    "DB": 0,
-    "DEFAULT_TIMEOUT": 480,
-  }
-}
-
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', "locahost:6379")
 
 CELERY_BEAT_SCHEDULE = {
@@ -88,6 +73,6 @@ CELERY_BEAT_SCHEDULE = {
     'create_tive_sensor_report': {
         'task': 'management.cron.my_scheduled_job',
         # execute every 10 minute with offset of 2
-        'schedule': crontab(minute='03,13,23,33,43,53'),
+        'schedule': crontab(minute='03,53'),
     }
 }

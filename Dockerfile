@@ -28,16 +28,12 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     libblas-dev \
     libatlas-base-dev \
     libffi-dev \
-    lib32ncurses5-dev \
-    gcc \
-    python-dev \
     python3-dev \
     default-libmysqlclient-dev \
     default-mysql-client \
     build-essential \
     redis-server \
     celery \
-    sudo \
     supervisor \
     cron \
  && rm -rf /var/lib/apt/lists/*
