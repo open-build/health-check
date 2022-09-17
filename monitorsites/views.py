@@ -31,21 +31,15 @@ def homepage(request):
 
 @login_required(login_url='/')
 def report(request,pk):
-    """View function for report page of site."""
-    model = MonitorSiteEntry
 
-    def get(self, request, *args, **kwargs):
+    getReport = MonitorSiteEntry.objects.all().filter(site_id=pk)
 
-        getReport = MonitorSiteEntry.objects.all().filter(site_id=pk)
+    url = 'https://api.wappalyzer.com/lookup/v2/?urls=' + 'https://' + getReport.monitorsite.url + '&sets=email,phone,contact,social,meta,locale'
+    headers = {'x-api-key' : 'ufskVhLffl7keYV7UsHTm14GJH4NQgeAa72kdd4C'}
+    r = requests.get(url, headers=headers)
+    analysis = r.json()
 
-        url = 'https://api.wappalyzer.com/lookup/v2/?urls=' + 'https://' + getReport.monitorsite.url + '&sets=email,phone,contact,social,meta,locale'
-        headers = {'x-api-key' : 'ufskVhLffl7keYV7UsHTm14GJH4NQgeAa72kdd4C'}
-        r = requests.get(url, headers=headers)
-        analysis = r.json()
-
-        return render(request, self.template_name, {'getReport': getReport, 'wapp': analysis })
-    # Render the HTML template index.html with the data in the context variable
-    return render(request, 'report.html')
+    return render(request, self.template_name, {'getReport': getReport, 'wapp': analysis })
 
 @login_required(login_url='/')
 def check_now(request,pk):
