@@ -43,8 +43,6 @@ INSTALLED_APPS = [
     'colorful',
     'crispy_forms',
 
-    'django_celery_beat',
-
     # auth
     'django.contrib.sites',
     'allauth',
