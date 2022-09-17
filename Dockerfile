@@ -16,26 +16,22 @@ ENV PYTHONUNBUFFERED=1 \
 
 # Install system packages required by Django.
 RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
-    build-essential \
-    libpq-dev \
-    libssl-dev \
-    libffi-dev \
-    libmariadb-dev-compat \
-    libmariadb-dev \
-    libjpeg62-turbo-dev \
-    zlib1g-dev \
-    libwebp-dev \
-    libblas-dev \
-    libatlas-base-dev \
-    libffi-dev \
-    python3-dev \
-    default-libmysqlclient-dev \
-    default-mysql-client \
-    build-essential \
-    redis-server \
-    celery \
-    supervisor \
-    cron \
+  build-essential \
+  libpq-dev \
+  libssl-dev \
+  libffi-dev \
+  libmariadb-dev-compat \
+  libmariadb-dev \
+  libjpeg62-turbo-dev \
+  zlib1g-dev \
+  libwebp-dev \
+  python3-dev \
+  default-libmysqlclient-dev \
+  default-mysql-client \
+  build-essential \
+  celery \
+  supervisor \
+  cron \
  && rm -rf /var/lib/apt/lists/*
 
 # Fix permissions on crontab
