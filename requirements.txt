@@ -9,3 +9,4 @@ pyopenssl
 django-paypal
 sentry-sdk
 celery
+django-celery-beat
