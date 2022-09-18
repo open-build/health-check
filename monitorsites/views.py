@@ -32,7 +32,7 @@ def homepage(request):
 @login_required(login_url='/')
 def report(request,pk):
 
-    getReport = MonitorSiteEntry.objects.all().filter(site_id=pk)
+    getReport = MonitorSiteEntry.objects.get(site_id=pk)
 
     url = 'https://api.wappalyzer.com/lookup/v2/?urls=' + 'https://' + getReport.site.url + '&sets=email,phone,contact,social,meta,locale'
     headers = {'x-api-key' : 'ufskVhLffl7keYV7UsHTm14GJH4NQgeAa72kdd4C'}
