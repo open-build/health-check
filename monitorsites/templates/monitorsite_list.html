@@ -31,7 +31,7 @@
               <td>{{ site.status|truncatechars:85 }}</td>
               <td>{{ site.ssl_status|truncatechars:85 }}</td>
               <td>{{ site.ssl_expirtaion|date:"SHORT_DATE_FORMAT" }}</td>
-              <td>{{ site.last_polled_date_time|truncatechars:85 }}</td>
+              <td>{{ site.last_polled_date_time|date:"SHORT_DATE_FORMAT" }}</td>
               <td><a href="/monitorsites_check/{{ site.id }}" class="btn btn-xs btn-success"> CHECK NOW </a></td>
               <td><a href="/report/{{ site.id }}" class="btn btn-xs btn-success"> HISTORY </a></td>
             </tr>
