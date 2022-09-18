@@ -39,7 +39,7 @@ def report(request,pk):
     r = requests.get(url, headers=headers)
     analysis = r.json()
 
-    return render(request, self.template_name, {'getReport': getReport, 'wapp': analysis })
+    return render(request, 'report.html', {'getReport': getReport, 'wapp': analysis })
 
 @login_required(login_url='/')
 def check_now(request,pk):
