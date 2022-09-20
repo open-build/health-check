@@ -43,7 +43,23 @@
     </div>
     <div class='panel panel-default'>
       <h2> Web Stack Analysis <h2>
-      <p>{{ wapp }}</p>
+
+      <table class="table">
+      {{% for x in wapp %}
+        <tr>
+          <th colspan="5">{{ x.url }}</th>
+        </tr>
+        {{% for y in x.technologies %}
+        <tr>
+          <th scope="row">{{ y.name|truncatechars:85 }}</th>
+          <td>{{ y.slug }}</td>
+          <td>{{ y.catagories }}</td>
+          <td>{{ y.versions|truncatechars:85 }}</td>
+          <td>{{ y.trafficRank }}</td>
+        </tr>
+      {% endfor %}
+      {% endfor %}
+      </table>
     </div>
 
 
