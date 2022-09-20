@@ -45,11 +45,11 @@
       <h2> Web Stack Analysis <h2>
 
       <table class="table">
-      {{% for x in wapp %}
+      {% for x in wapp %}
         <tr>
           <th colspan="5">{{ x.url }}</th>
         </tr>
-        {{% for y in x.technologies %}
+        {% for y in x.technologies %}
         <tr>
           <th scope="row">{{ y.name|truncatechars:85 }}</th>
           <td>{{ y.slug }}</td>
