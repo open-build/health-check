@@ -48,7 +48,6 @@
         <tr>
           <th colspan="5">{{ x.url }}</th>
         </tr>
-        {% for y in x.technologies %}
         <tr>
           <th scope="col">Name</th>
           <th scope="col">name</th>
@@ -56,6 +55,7 @@
           <th scope="col">Version</th>
           <th scope="col">Rank</th>
         </tr>
+        {% for y in x.technologies %}
         <tr>
           <th scope="row">{{ y.name|truncatechars:85 }}</th>
           <td>{{ y.slug }}</td>
