@@ -49,17 +49,15 @@
           <th colspan="5">{{ x.url }}</th>
         </tr>
         <tr>
-          <th scope="col">Name</th>
-          <th scope="col">name</th>
-          <th scope="col">Catagory</th>
-          <th scope="col">Version</th>
-          <th scope="col">Rank</th>
+          <th scope="col"><b>Name</b></th>
+          <th scope="col">&nbsp;</th>
+          <th scope="col"><b>Version</b></th>
+          <th scope="col"><b>Rank</b></th>
         </tr>
         {% for y in x.technologies %}
         <tr>
           <th scope="row">{{ y.name|truncatechars:85 }}</th>
           <td>{{ y.slug }}</td>
-          <td>{{ y.catagories }}</td>
           <td>{{ y.versions|truncatechars:85 }}</td>
           <td>{{ y.trafficRank }}</td>
         </tr>

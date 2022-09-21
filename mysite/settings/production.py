@@ -52,7 +52,7 @@ CELERY_BEAT_SCHEDULE = {
     #     'schedule': crontab(minute='02,17,32,47'),
     # },
     'check_sites': {
-        'task': 'monitorsites.celery.tasks.my_scheduled_job',
+        'task': 'monitorsites.tasks.my_scheduled_job',
         # execute every 10 minute with offset of 2
         'schedule': crontab(minute='03,13,23,33,43,53'),
     }
