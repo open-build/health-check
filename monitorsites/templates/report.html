@@ -42,14 +42,20 @@
       </table>
     </div>
     <div class='panel panel-default'>
-      <h2> Web Stack Analysis <h2>
-
+      <h2> Web Stack Analysis </h2>
       <table class="table">
       {% for x in wapp %}
         <tr>
           <th colspan="5">{{ x.url }}</th>
         </tr>
         {% for y in x.technologies %}
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">name</th>
+          <th scope="col">Catagory</th>
+          <th scope="col">Version</th>
+          <th scope="col">Rank</th>
+        </tr>
         <tr>
           <th scope="row">{{ y.name|truncatechars:85 }}</th>
           <td>{{ y.slug }}</td>
@@ -60,6 +66,7 @@
       {% endfor %}
       {% endfor %}
       </table>
+      <p>Web Stack analysis provided by <a href="https://www.wappalyzer.com">Wappalyzer</a></p>
     </div>
 
 
