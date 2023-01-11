@@ -26,16 +26,21 @@
       </tr>
     </thead>
       <tr>
-        <th scope="row"><a href="/monitorsites_update/{{ site.id }}">{{ message.name }}</a></th>
-        <td><a href="https://{{ site.url }}" target="_new">{{ message.url }}</a></td>
-        <td>{{ message.status }}</td>
-        <td>{{ message.ssl_status}}</td>
-        <td>{{ message.ssl_expirtaion }}</td>
-        <td>{{ message.last_polled_date_time }}</td>
+        <th scope="row"><a href="/monitorsites_update/{{ site.id }}">{{ getReport.name }}</a></th>
+        <td><a href="https://{{ site.url }}" target="_new">{{ getReport.url }}</a></td>
+        <td>{{ getReport.status }}</td>
+        <td>{{ getReport.ssl_status}}</td>
+        <td>{{ getReport.ssl_expirtaion }}</td>
+        <td>{{ getReport.last_polled_date_time }}</td>
       </tr>
 
     </table>
     {{ message }}
+    {% if message.contains "200" %}
+    <h4 class="warning">All Good!</h4>
+    {% else %}
+    <h4 class="warning">Uh Oh!</h4>
+    {% endif %}
   </div>
     <a href="/monitorsites/" class="btn btn-xs btn-success">Back to Sites</a>
 </div>

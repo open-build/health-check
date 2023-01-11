@@ -45,8 +45,9 @@ def report(request,pk):
 def check_now(request,pk):
     """Check the status of a site."""
     message = check_site(pk)
+    getReport = MonitorSiteEntry.objects.all().filter(site_id=pk).latest('create_date')
     # Render the HTML template index.html with the data in the context variable
-    return render(request, 'health_check.html',{'message': message,})
+    return render(request, 'health_check.html',{'getReport': getReport, 'message': message,})
 
 class MonitorSiteList(ListView,LoginRequiredMixin):
     """

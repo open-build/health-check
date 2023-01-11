@@ -64,3 +64,11 @@ CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', "locahost:6379")
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_TASK_SERIALIZER = 'json'
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"  # new
+DEFAULT_FROM_EMAIL = "help@open.build"
+EMAIL_HOST = "smtp.sendgrid.net"  # new
+EMAIL_HOST_USER = "apikey"  # new
+EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_PASSWORD")  # new
+EMAIL_PORT = 587  # new
+EMAIL_USE_TLS = True  # new
