@@ -75,10 +75,6 @@ CMD set -xe; gunicorn mysite.wsgi:application
 
 # install cron and add the crontab file
 COPY crontab /etc/cron.d/django-cron
-RUN chmod 0644 /etc/cron.d/django-cron
-
-# give execution rights on the cron job
-RUN chmod 0644 /etc/cron.d/django-cron
 
 # create the log file to be able to run tail
 RUN touch /var/log/cron.log
