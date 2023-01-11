@@ -77,7 +77,7 @@ CMD set -xe; gunicorn mysite.wsgi:application
 COPY crontab /etc/cron.d/django-cron
 
 # create the log file to be able to run tail
-RUN touch /var/log/cron.log
+COPY logs/cron.log /var/log/cron.log
 
 # run the command on container startup
 CMD cron && tail -f /var/log/cron.log
