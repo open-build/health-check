@@ -74,7 +74,6 @@ CMD python3 manage.py collectstatic --noinput --clear
 CMD set -xe; gunicorn mysite.wsgi:application
 
 # install cron and add the crontab file
-RUN apt-get update && apt-get install -y cron
 COPY crontab /etc/cron.d/django-cron
 RUN chmod 0644 /etc/cron.d/django-cron
 
