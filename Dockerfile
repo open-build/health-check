@@ -79,4 +79,4 @@ COPY crontab /etc/cron.d/django-cron
 RUN env > /app/.env
 
 # run the command on container startup
-CMD sudo cron && tail -f logs/cron.log
+CMD cron && tail -f logs/cron.log
