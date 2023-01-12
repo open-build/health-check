@@ -34,9 +34,6 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
   cron \
  && rm -rf /var/lib/apt/lists/*
 
-# Fix permissions on crontab
-RUN chmod u=rwx,g=wxs,o=t /var/spool/cron/crontabs
-
 # Install the application server.
 RUN pip3 install "gunicorn==20.0.4"
 
@@ -74,9 +71,8 @@ CMD python3 manage.py collectstatic --noinput --clear
 CMD set -xe; gunicorn mysite.wsgi:application
 
 # install cron and add the crontab file
-COPY crontab /etc/cron.d/django-cron
-
-RUN env > /app/.env
+RUN echo "*/2 * * * * cd /app && python manage.py check" | crontab -
+RUN crontab -l
 
 # run the command on container startup
-CMD cron && tail -f logs/cron.log
+CMD cron && tail -f /var/log/cron.log
