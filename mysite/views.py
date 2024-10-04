@@ -5,7 +5,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.views.generic import TemplateView
 
-from allauth.socialaccount.forms import SignupForm
 class MyCustomSocialSignupForm(SignupForm):
 
     def save(self, request):
