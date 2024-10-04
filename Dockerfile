@@ -70,9 +70,23 @@ CMD python3 manage.py collectstatic --noinput --clear
 #   instance can be started with a simple "docker run" command.
 CMD set -xe; gunicorn mysite.wsgi:application
 
-# install cron and add the crontab file and run every 2 minutes
-RUN echo "*/2 * * * * cd /app && python manage.py check" | crontab -
-RUN crontab -l
+# Install cron
+RUN apt-get update && apt-get install -y cron
 
-# run the command on container startup
+# Copy your Python script or make sure your Django app script is accessible
+COPY monitorsites/tasks.py /app/tasks.py
+
+# Set up a cron job
+RUN echo "*/20 * * * * python /app/tasks.py >> /var/log/cron.log 2>&1" > /etc/cron.d/my-cron-job
+
+# Give execution rights on the cron job
+RUN chmod 0644 /etc/cron.d/my-cron-job
+
+# Create the log file to be able to run tail
+RUN touch /var/log/cron.log
+
+# Apply cron job
+RUN crontab /etc/cron.d/my-cron-job
+
+# Start cron in the foreground
 CMD cron && tail -f /var/log/cron.log
