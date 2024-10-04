@@ -57,7 +57,7 @@ RUN python3 manage.py makemigrations
 USER builder
 
 # Collect static files.
-CMD python3 manage.py collectstatic --noinput --clear
+RUN python3 manage.py collectstatic --noinput --clear
 
 # Runtime command that executes when "docker run" is called, it does the
 # following:
@@ -68,10 +68,8 @@ CMD python3 manage.py collectstatic --noinput --clear
 #   PRACTICE. The database should be migrated manually or using the release
 #   phase facilities of your hosting platform. This is used only so the
 #   instance can be started with a simple "docker run" command.
-CMD set -xe; gunicorn mysite.wsgi:application
 
-# Install cron
-RUN apt-get update && apt-get install -y cron
+
 
 # Copy your Python script or make sure your Django app script is accessible
 COPY monitorsites/tasks.py /app/tasks.py
@@ -89,4 +87,4 @@ RUN touch /var/log/cron.log
 RUN crontab /etc/cron.d/my-cron-job
 
 # Start cron in the foreground
-CMD cron && tail -f /var/log/cron.log
+CMD set -xe; gunicorn mysite.wsgi:application; cron && tail -f /var/log/cron.log
