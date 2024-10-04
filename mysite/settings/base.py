@@ -44,14 +44,6 @@ INSTALLED_APPS = [
 
     # auth
     'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.apple',
-    'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.gitlab',
 ]
 
 MIDDLEWARE = [
@@ -122,9 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = (
  #used for default signin such as loggin into admin panel
  'django.contrib.auth.backends.ModelBackend',
-
- #used for social authentications
- 'allauth.account.auth_backends.AuthenticationBackend',
  )
 
 SOCIALACCOUNT_PROVIDERS = {
