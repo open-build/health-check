@@ -19,7 +19,6 @@ urlpatterns = [
     path('/paypal-return/', views.PaypalReturnView.as_view(), name='paypal-return'),
     path('/paypal-cancel/', views.PaypalCancelView.as_view(), name='paypal-cancel'),
 
-    path('accounts/', include('allauth.urls')),
     path("monitorsites_check/(?P<pk>\w+)/$", check_now),
 ]
 

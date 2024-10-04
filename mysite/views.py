@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.views.generic import TemplateView
 
+
 def register_request(request):
 	if request.method == "POST":
 		form = NewUserForm(request.POST)
