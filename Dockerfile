@@ -70,9 +70,11 @@ RUN python3 manage.py collectstatic --noinput --clear
 #   instance can be started with a simple "docker run" command.
 
 
-
 # Copy your Python script or make sure your Django app script is accessible
 COPY monitorsites/tasks.py /app/tasks.py
+
+# Switch to root to create cron job
+USER root
 
 # Set up a cron job
 RUN echo "*/20 * * * * python /app/tasks.py >> /var/log/cron.log 2>&1" > /etc/cron.d/my-cron-job
