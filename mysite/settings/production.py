@@ -58,12 +58,11 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 
-CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', "locahost:6379")
-#: Only add pickle to this list if your broker is secured
-#: from unwanted access (see userguide/security.html)
+CELERY_BROKER_URL = 'redis://localhost:6379/0' 
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_TASK_SERIALIZER = 'json'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"  # new
 DEFAULT_FROM_EMAIL = "help@open.build"

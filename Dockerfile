@@ -70,7 +70,7 @@ CMD python3 manage.py collectstatic --noinput --clear
 #   instance can be started with a simple "docker run" command.
 CMD set -xe; gunicorn mysite.wsgi:application
 
-# install cron and add the crontab file
+# install cron and add the crontab file and run every 2 minutes
 RUN echo "*/2 * * * * cd /app && python manage.py check" | crontab -
 RUN crontab -l
 

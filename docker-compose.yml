@@ -1,0 +1,14 @@
+services:
+  django:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+  celery:
+    build: .
+    command: celery -A your_project_name worker --loglevel=info
+  celery_beat:
+    build: .
+    command: celery -A your_project_name beat --loglevel=info
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"

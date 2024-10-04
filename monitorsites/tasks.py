@@ -4,3 +4,4 @@ from .health_check import check_all_sites
 @shared_task
 def my_scheduled_job():
     check_all_sites()
+    print("Scheduled task running every 20 minutes")
