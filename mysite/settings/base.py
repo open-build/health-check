@@ -41,9 +41,6 @@ INSTALLED_APPS = [
     # forms
     'colorful',
     'crispy_forms',
-
-    # auth
-    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
