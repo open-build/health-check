@@ -5,18 +5,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.views.generic import TemplateView
 
-class MyCustomSocialSignupForm(SignupForm):
-
-    def save(self, request):
-
-        # Ensure you call the parent class's save.
-        # .save() returns a User object.
-        user = super(MyCustomSocialSignupForm, self).save(request)
-
-        # Add your own processing here.
-
-        # You must return the original result.
-        return user
 
 def register_request(request):
 	if request.method == "POST":
