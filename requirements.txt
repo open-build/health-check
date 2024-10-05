@@ -11,3 +11,4 @@ django-crontab
 celery
 redis
 django-celery-beat
+crispy-bootstrap4
